@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Customer.CustomerMainActivity">
+
+
+
+
+  <LinearLayout
+      android:layout_marginBottom="100px"
+      android:weightSum="3"
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <Button
+
+        android:layout_weight="1"
+        android:text="Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_weight="1"
+        android:text="Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_weight="1"
+        android:text="Notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+  </LinearLayout>
+
+
+
+  <androidx.cardview.widget.CardView
+      app:cardCornerRadius="12dp"
+      app:contentPadding="6dp"
+      android:layout_margin="1dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:background="#dfd6d6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+      <TextView
+          android:id="@+id/phone"
+          android:textColor="@color/black"
+          android:textSize="25sp"
+          android:text="Phone :"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+
+      <TextView
+
+          android:layout_below="@id/phone"
+          android:id="@+id/name"
+          android:textColor="@color/black"
+          android:textSize="25sp"
+          android:text="Name :"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+
+      <TextView
+          android:layout_below="@id/name"
+          android:id="@+id/joindate"
+          android:textColor="@color/black"
+          android:textSize="25sp"
+          android:text="Joining date :"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+
+      <ImageView
+          android:layout_alignParentEnd="true"
+          android:src="@drawable/month"
+          android:layout_width="250px"
+          android:layout_height="250px"
+          android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+
+
+
+  </androidx.cardview.widget.CardView>
+
+
+
+  <LinearLayout
+      android:layout_marginBottom="50px"
+      android:weightSum="3"
+      android:layout_marginTop="50px"
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:text="Cash Balance:"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView
+          android:textSize="20sp"
+          android:textStyle="bold"
+          android:text="500 $"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:textSize="15sp"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:text="Add Balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:text="Send Balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+  </LinearLayout>
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+
+    <Button
+        android:id="@+id/allorder"
+        android:textAlignment="textStart"
+        android:text="All Order"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start" />
+
+    <Button
+        android:id="@+id/pendingD"
+        android:layout_below="@id/allorder"
+        android:textAlignment="textStart"
+        android:text="Pending Delivered"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start" />
+
+    <Button
+        android:id="@+id/deliveredOrder"
+        android:layout_below="@id/pendingD"
+        android:textAlignment="textStart"
+        android:text="Delivered Order"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start" />
+
+
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        android:text="Create An Online Shop"
+        android:layout_below="@id/deliveredOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+  </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>
