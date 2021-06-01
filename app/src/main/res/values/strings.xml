@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dokandar24</string>
+    <string name="register_link"><u>Registration Form</u></string>
+    <string name="login_link"><u>Login Form</u></string>
 </resources>

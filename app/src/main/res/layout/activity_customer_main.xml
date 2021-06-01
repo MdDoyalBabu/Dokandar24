@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Customer.CustomerMainActivity">
-
-
-
-
   <LinearLayout
       android:layout_marginBottom="100px"
       android:weightSum="3"
