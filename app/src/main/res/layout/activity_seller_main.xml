@@ -46,46 +46,60 @@
 
 
         <RelativeLayout
+            android:padding="8dp"
             android:background="#dfd6d6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
             <TextView
-                android:id="@+id/phone"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/profileImageView"
+                android:id="@+id/phoneTv"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="Phone :"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
 
             <TextView
-
-                android:layout_below="@id/phone"
-                android:id="@+id/name"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/profileImageView"
+                android:layout_below="@id/phoneTv"
+                android:id="@+id/nameTv"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:text="Name :"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
 
             <TextView
-                android:layout_below="@id/name"
-                android:id="@+id/joindate"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true"
+               android:layout_toLeftOf="@+id/profileImageView"
+                android:layout_below="@id/nameTv"
+                android:id="@+id/joindateTv"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="17sp"
                 android:text="Joining date :"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/profileImageView"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/month"
-                android:layout_width="250px"
-                android:layout_height="250px"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#000"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_alignParentRight="true" />
 
         </RelativeLayout>
@@ -107,6 +121,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:padding="5dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -117,9 +132,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/cashBalanceTv"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="500 $"
+                android:text="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -180,6 +196,7 @@
 
 
         <Button
+            android:id="@+id/createShopButton"
             android:layout_marginTop="50dp"
             android:padding="20dp"
             android:textAllCaps="false"

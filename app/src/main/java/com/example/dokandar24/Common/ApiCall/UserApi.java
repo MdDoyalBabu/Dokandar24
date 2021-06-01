@@ -14,6 +14,7 @@ import com.example.dokandar24.BaseUrl;
 import com.example.dokandar24.Common.Api.UserRetrofitApi;
 import com.example.dokandar24.Common.Interfaces.UserInterface;
 import com.example.dokandar24.Common.LocalDb.UserDb;
+import com.example.dokandar24.Common.Model.SellerListModel;
 import com.example.dokandar24.Common.Model.SellerModel;
 import com.example.dokandar24.Common.Responses.CustomResponse;
 import com.example.dokandar24.Common.Responses.RetrofitResponses;
@@ -21,6 +22,7 @@ import com.example.dokandar24.Common.Responses.RetrofitResponses2;
 import com.example.dokandar24.Common.Responses.RetrofitSellerResponses;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -103,32 +105,56 @@ public class UserApi implements UserInterface{
     @Override
     public void getCurrentUser(String token, ProgressDialog progressDialog, RetrofitSellerResponses retrofitResponses) {
        progressDialog.show();
-       Call<SellerModel> call=userRetrofitApi.getCurrentSeller(token);
-      call.enqueue(new Callback<SellerModel>() {
-          @Override
-          public void onResponse(Call<SellerModel> call, Response<SellerModel> response) {
-              SellerModel seller=response.body();
-              if(!response.isSuccessful()){
-                  retrofitResponses.onError("User Not Found",progressDialog);
-              }else{
-                  try{
-                      if(seller!=null){
-                          retrofitResponses.onSuccess("Success",progressDialog,seller);
-                      }else{
-                          retrofitResponses.onError("User Not Found",progressDialog);
-                      }
-                    }catch (Exception e){
-                      Toast.makeText(context, ""+e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                  }
-              }
-          }
+       Call<SellerListModel> call=userRetrofitApi.getCurrentSeller(token);
+       call.enqueue(new Callback<SellerListModel>() {
+           @Override
+           public void onResponse(Call<SellerListModel> call, Response<SellerListModel> response) {
+               SellerListModel sellerModelList=response.body();
+               if(!response.isSuccessful()){
+                   retrofitResponses.onError("User Not Found",progressDialog);
+               }else{
+                   try{
+                       if(sellerModelList.getSeller()!=null && sellerModelList.getSeller().size()>0){
+                           SellerModel seller=sellerModelList.getSeller().get(0);
+                           retrofitResponses.onSuccess("Success",progressDialog,seller);
+                       }else{
+                           retrofitResponses.onError("User Not Found",progressDialog);
+                       }
+                   }catch (Exception e){
+                       Toast.makeText(context, ""+e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                   }
+               }
+           }
 
-          @Override
-          public void onFailure(Call<SellerModel> call, Throwable t) {
-              retrofitResponses.onError("User Not Found",progressDialog);
-          }
-      });
+           @Override
+           public void onFailure(Call<SellerListModel> call, Throwable t) {
+               retrofitResponses.onError("User Not Found",progressDialog);
+           }
+       });
+    }
+    @Override
+    public void createSellerShop(Map<String, Object> shopMap,String token, ProgressDialog progressDialog, RetrofitResponses retrofitResponses) {
+        progressDialog.show();
+        Call<CustomResponse> call=userRetrofitApi.createShop(token,shopMap);
 
+        call.enqueue(new Callback<CustomResponse>() {
+            @Override
+            public void onResponse(Call<CustomResponse> call, Response<CustomResponse> response) {
+                CustomResponse customResponse=response.body();
+                if(!response.isSuccessful()){
+                    String message=customResponse==null?"Shop Create Failed.":customResponse.getMessage();
+                    retrofitResponses.onError(message,progressDialog);
+                }else{
+                    String message=customResponse==null?"Shop Create Successful.":customResponse.getMessage();
+                    retrofitResponses.onSuccess(message,progressDialog);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CustomResponse> call, Throwable t) {
+                retrofitResponses.onError("Shop Create Failed.",progressDialog);
+            }
+        });
 
 
     }

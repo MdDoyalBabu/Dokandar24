@@ -15,5 +15,6 @@ public interface UserInterface {
 
     void registerSeller(SellerModel seller, ProgressBar progressDialog, RetrofitResponses2 retrofitResponses);
     void loginSeller(Map<String,Object> sellerMap, ProgressBar progressDialog, RetrofitResponses2 retrofitResponses);
+    void createSellerShop(Map<String,Object> shopMap,String token, ProgressDialog progressDialog, RetrofitResponses retrofitResponses);
     void getCurrentUser(String token, ProgressDialog progressDialog, RetrofitSellerResponses retrofitResponses);
 }
