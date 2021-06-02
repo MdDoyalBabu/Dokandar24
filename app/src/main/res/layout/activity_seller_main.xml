@@ -6,8 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Seller.SellerMainActivity">
+
+    <include
+        layout="@layout/app_ber_layout"
+        android:id="@+id/appBarId"/>
+
+
     <LinearLayout
-        android:layout_marginBottom="100px"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="100dp"
         android:weightSum="3"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -143,6 +150,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/addBalanceButton"
             android:textSize="15sp"
             android:layout_weight="1"
             android:textAllCaps="false"
@@ -150,6 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/sendBalanceButton"
             android:layout_weight="1"
             android:textAllCaps="false"
             android:text="Send Balance"
@@ -201,6 +210,16 @@
             android:padding="20dp"
             android:textAllCaps="false"
             android:text="Create An Online Shop"
+            android:layout_below="@id/deliveredOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:visibility="gone"
+            android:id="@+id/myShopButton"
+            android:layout_marginTop="50dp"
+            android:padding="20dp"
+            android:textAllCaps="false"
+            android:text="My Shop"
             android:layout_below="@id/deliveredOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -1,11 +1,15 @@
 package com.example.dokandar24.Seller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +31,9 @@ public class SellerMainActivity extends AppCompatActivity {
 
     private TextView phoneTv,nameTv,joiningDateTv;
     private TextView cashBalanceTv;
-    private Button createShopButton;
-
+    private Button createShopButton,myShopButton,sendBalanceButton;
+    private Button addBalance;
+    private Toolbar toolbar;
 
     UserApi userApi;
     UserDb userDb;
@@ -47,18 +52,41 @@ public class SellerMainActivity extends AppCompatActivity {
                 showCreateShopDialogue();
             }
         });
+        myShopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(SellerMainActivity.this,SellerShopActivity.class));
+            }
+        });
+        addBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(SellerMainActivity.this,CashinActivity.class));
+            }
+        });
+        sendBalanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(SellerMainActivity.this,SendMoneyActivity.class));
+            }
+        });
 
 
     }
     private void init() {
+        toolbar=findViewById(R.id.appBarId);
+        setSupportActionBar(toolbar);
+        this.setTitle("Profile");
+
 
         nameTv=findViewById(R.id.nameTv);
         phoneTv=findViewById(R.id.phoneTv);
         joiningDateTv=findViewById(R.id.joindateTv);
         cashBalanceTv=findViewById(R.id.cashBalanceTv);
         createShopButton=findViewById(R.id.createShopButton);
-
-
+        myShopButton=findViewById(R.id.myShopButton);
+        addBalance=findViewById(R.id.addBalanceButton);
+        sendBalanceButton=findViewById(R.id.sendBalanceButton);
 
         userApi=new UserApi(this);
         userDb=new UserDb(this);
@@ -76,7 +104,9 @@ public class SellerMainActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(seller.getAccountStatus().equals("inactive")){
                     createShopButton.setVisibility(View.VISIBLE);
+                    myShopButton.setVisibility(View.GONE);
                 }else{
+                    myShopButton.setVisibility(View.VISIBLE);
                     createShopButton.setVisibility(View.GONE);
                 }
                 nameTv.setText("Name: "+seller.getName());
@@ -92,9 +122,9 @@ public class SellerMainActivity extends AppCompatActivity {
             @Override
             public void onError(String message, ProgressDialog progressDialog) {
                 progressDialog.dismiss();
-                userDb.setUserData("","");
+                /*userDb.setUserData("","");
                 startActivity(new Intent(SellerMainActivity.this,SellerLoginActivity.class));
-                finish();
+                finish();*/
             }
         });
     }
@@ -123,7 +153,6 @@ public class SellerMainActivity extends AppCompatActivity {
             });
 
     }
-
     private void createAnOnlineShop(String shopName,AlertDialog dialog) {
 
         String token=userDb.getAccessToken();
@@ -163,5 +192,23 @@ public class SellerMainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.logout_menu){
+            logout();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void logout() {
+        UserDb userDb=new UserDb(this);
+        userDb.setUserData("","");
+        startActivity(new Intent(SellerMainActivity.this, SellerLoginActivity.class));
+        finish();
+    }
 
 }

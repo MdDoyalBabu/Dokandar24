@@ -15,10 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-
-
             <LinearLayout
                 android:layout_marginBottom="20dp"
                 android:weightSum="3"
@@ -47,6 +43,17 @@
 
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/shopNameTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#673AB7"
+                android:text="Shop Name: "
+                android:textAlignment="center"
+                />
 
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="12dp"
@@ -60,29 +67,25 @@
                     android:background="#dfd6d6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-
-                    <LinearLayout
-
-                        android:weightSum="6"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
                         <LinearLayout
-                            android:layout_marginTop="30px"
+                            android:layout_toLeftOf="@+id/profileImageView"
+                            android:id="@+id/line1"
+                            android:layout_gravity="center_vertical"
+                            android:padding="10dp"
                             android:orientation="vertical"
-                            android:layout_weight="2"
+                            android:layout_weight="4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/phoneTv"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 android:text=" Seller Phone :"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
                             <TextView
+                                android:id="@+id/nameTv"
                                 android:layout_marginTop="10dp"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
@@ -90,6 +93,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
                             <TextView
+                                android:id="@+id/joindateTv"
                                 android:layout_marginTop="10dp"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
@@ -98,43 +102,17 @@
                                 android:layout_height="wrap_content"/>
 
                         </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="2"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/black"
-                                android:textSize="25sp"
-                                android:textAlignment="center"
-                                android:text="Banner"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal" />
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_marginStart="100px"
-                                android:src="@drawable/oops"
-                                android:layout_width="250px"
-                                android:layout_height="250px"
-                                android:layout_marginLeft="100px" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_margin="5dp"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/profileImageView"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/profile"
+                                app:civ_border_width="2dp"
+                                app:civ_border_color="#000"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_alignParentRight="true" />
                 </RelativeLayout>
 
 
@@ -147,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
-                    android:id="@+id/shopCode"
+                    android:id="@+id/shopCodeBtn"
                     android:layout_marginTop="8dp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
@@ -156,7 +134,7 @@
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/allShop"
-                    android:layout_below="@id/shopCode"
+                    android:layout_below="@id/shopCodeBtn"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
@@ -172,6 +150,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -182,9 +161,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:id="@+id/shopBalanceTv"
                         android:textSize="25sp"
                         android:textStyle="bold"
-                        android:text="500"
+                        android:text="0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -208,13 +188,13 @@
 
             </LinearLayout>
             <LinearLayout
-
                 android:weightSum="3"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -225,9 +205,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:id="@+id/sellBalanceTv"
                         android:textSize="25sp"
                         android:textStyle="bold"
-                        android:text="500"
+                        android:text="0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -259,6 +240,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -269,9 +251,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:id="@+id/cashBalanceTv"
                         android:textSize="25sp"
                         android:textStyle="bold"
-                        android:text="500"
+                        android:text="0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

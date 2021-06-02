@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dokandar24"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Seller.SellerShopActivity"></activity>
-        <activity android:name=".Seller.SellerRegistrationActivity"></activity>
+        <activity android:name=".Seller.SendMoneyActivity"></activity>
+        <activity android:name=".Seller.CashinActivity" />
+        <activity android:name=".Seller.SellerShopActivity" />
+        <activity android:name=".Seller.SellerRegistrationActivity" />
         <activity android:name=".Seller.SellerLoginActivity" />
         <activity android:name=".Customer.CustomerRegistrationActivity" />
         <activity android:name=".Customer.CustomerLoginActivity" />
@@ -25,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Customer.CustomerMainActivity"></activity>
+        <activity android:name=".Customer.CustomerMainActivity" />
     </application>
 
 </manifest>
