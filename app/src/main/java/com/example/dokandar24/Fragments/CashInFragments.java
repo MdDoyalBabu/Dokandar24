@@ -81,8 +81,8 @@ public class CashInFragments extends Fragment {
         Calendar callForTime=Calendar.getInstance();
         SimpleDateFormat currentTime=new SimpleDateFormat("HH:mm");
         String saveCurrentTime=currentTime.format(callForTime.getTime());
-        String totalTime=saveCurrentDate+" at "+saveCurrentTime;
         String token=userDb.getAccessToken();
+        String totalTime=saveCurrentDate+" at "+saveCurrentTime;
 
         Map<String,Object> cashMap=new HashMap<>();
         cashMap.put("currentTime",totalTime);

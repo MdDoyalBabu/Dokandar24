@@ -31,6 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,6 +115,34 @@ public class UserApi implements UserInterface{
 
             }
         });
+    }
+
+    @Override
+    public void updateProfileImage(MultipartBody.Part image, RequestBody name,String token, ProgressDialog progressDialog, RetrofitResponses retrofitResponses) {
+        progressDialog.show();
+        Call<ResponseBody> call = userRetrofitApi.updateProfileImage(token,image, name);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(!response.isSuccessful()){
+                    retrofitResponses.onError("Profile Image Upload Failed.",progressDialog);
+                }else{
+                    if(response.code()==201){
+                        retrofitResponses.onSuccess("Profile Image Uploaded Successful",progressDialog);
+                    }else{
+                        retrofitResponses.onError("Profile Image Upload Failed.",progressDialog);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                retrofitResponses.onError("Profile Image Upload Failed.",progressDialog);
+            }
+        });
+
+
+
     }
 
     @Override

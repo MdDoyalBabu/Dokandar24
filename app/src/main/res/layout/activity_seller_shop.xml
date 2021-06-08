@@ -262,6 +262,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/sendMoneyButton"
                     android:textSize="15sp"
                     android:layout_weight="1"
                     android:textAllCaps="false"

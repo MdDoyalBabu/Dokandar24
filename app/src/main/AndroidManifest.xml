@@ -3,30 +3,36 @@
     package="com.example.dokandar24">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Dokandar24"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Seller.SendMoneyActivity"></activity>
+        <activity android:name=".Seller.ShopAllProductActivity"></activity>
+        <activity android:name=".Seller.SubCategoryActivity" />
+        <activity android:name=".Seller.CategoryActivity" />
+        <activity android:name=".Seller.ProductUploadActivity"></activity>
+        <activity android:name=".Seller.SendMoneyActivity" />
         <activity android:name=".Seller.CashinActivity" />
         <activity android:name=".Seller.SellerShopActivity" />
         <activity android:name=".Seller.SellerRegistrationActivity" />
-        <activity android:name=".Seller.SellerLoginActivity" />
-        <activity android:name=".Customer.CustomerRegistrationActivity" />
-        <activity android:name=".Customer.CustomerLoginActivity" />
-        <activity android:name=".Seller.SellerMainActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Seller.SellerLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Customer.CustomerRegistrationActivity" />
+        <activity android:name=".Customer.CustomerLoginActivity" />
+        <activity android:name=".Seller.SellerMainActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Customer.CustomerMainActivity" />
     </application>
 

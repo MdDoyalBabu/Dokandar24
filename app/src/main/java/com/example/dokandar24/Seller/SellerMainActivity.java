@@ -4,15 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +28,25 @@ import com.example.dokandar24.Common.Model.SellerModel;
 import com.example.dokandar24.Common.Responses.RetrofitResponses;
 import com.example.dokandar24.Common.Responses.RetrofitSellerResponses;
 import com.example.dokandar24.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SellerMainActivity extends AppCompatActivity {
 
@@ -34,11 +55,14 @@ public class SellerMainActivity extends AppCompatActivity {
     private Button createShopButton,myShopButton,sendBalanceButton;
     private Button addBalance;
     private Toolbar toolbar;
+    private CircleImageView profileImageView;
 
     UserApi userApi;
     UserDb userDb;
     ProgressDialog progressDialog;
-
+    Bitmap mBitmap;
+    private Uri imageUri;
+    private Button uploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +70,33 @@ public class SellerMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_seller_main);
         init();
 
-        createShopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCreateShopDialogue();
-            }
+        createShopButton.setOnClickListener(v -> showCreateShopDialogue());
+        myShopButton.setOnClickListener(v -> startActivity(new Intent(SellerMainActivity.this,SellerShopActivity.class)));
+        addBalance.setOnClickListener(v -> startActivity(new Intent(SellerMainActivity.this,CashinActivity.class)));
+        sendBalanceButton.setOnClickListener(v -> startActivity(new Intent(SellerMainActivity.this,SendMoneyActivity.class)));
+        profileImageView.setOnClickListener(v -> {
+            openfilechooser();
         });
-        myShopButton.setOnClickListener(new View.OnClickListener() {
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(SellerMainActivity.this,SellerShopActivity.class));
-            }
-        });
-        addBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(SellerMainActivity.this,CashinActivity.class));
-            }
-        });
-        sendBalanceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(SellerMainActivity.this,SendMoneyActivity.class));
+                if(mBitmap!=null){
+                    uploadProfileImage();
+                }else{
+                    Toast.makeText(SellerMainActivity.this, "Select An Image", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
 
+
+    }
+    private void openfilechooser() {
+        Intent intentf=new Intent();
+        intentf.setType("image/*");
+        intentf.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intentf,1);
     }
     private void init() {
         toolbar=findViewById(R.id.appBarId);
@@ -80,6 +105,7 @@ public class SellerMainActivity extends AppCompatActivity {
 
 
         nameTv=findViewById(R.id.nameTv);
+        uploadButton=findViewById(R.id.uploadButtonid);
         phoneTv=findViewById(R.id.phoneTv);
         joiningDateTv=findViewById(R.id.joindateTv);
         cashBalanceTv=findViewById(R.id.cashBalanceTv);
@@ -87,6 +113,7 @@ public class SellerMainActivity extends AppCompatActivity {
         myShopButton=findViewById(R.id.myShopButton);
         addBalance=findViewById(R.id.addBalanceButton);
         sendBalanceButton=findViewById(R.id.sendBalanceButton);
+        profileImageView=findViewById(R.id.profileImageView);
 
         userApi=new UserApi(this);
         userDb=new UserDb(this);
@@ -113,9 +140,8 @@ public class SellerMainActivity extends AppCompatActivity {
                 phoneTv.setText("Phone: "+seller.getPhone());
                 joiningDateTv.setText("Joining Date: "+seller.getJoiningDate());
                 cashBalanceTv.setText(""+seller.getCashBalance()+" tk");
-
-
-
+                if(!seller.getProfileImage().equals("none"))
+                    Picasso.get().load(seller.getProfileImage()).placeholder(R.drawable.profile).into(profileImageView);
 
             }
 
@@ -210,5 +236,77 @@ public class SellerMainActivity extends AppCompatActivity {
         startActivity(new Intent(SellerMainActivity.this, SellerLoginActivity.class));
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                imageUri=data.getData();
+                 if (imageUri != null) {
+                    try {
+                        mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                        profileImageView.setImageBitmap(mBitmap);
+                        uploadButton.setVisibility(View.VISIBLE);
+                   } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+    private void uploadProfileImage() {
+        try {
+
+            progressDialog.setMessage("Uploading..");
+            progressDialog.setTitle("Pleae wait..");
+            progressDialog.show();
+            String token=userDb.getAccessToken();
+
+            File filesDir = getApplicationContext().getFilesDir();
+            File file = new File(filesDir, "image" +".jpg");
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("profile", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "profile");
+            userApi.updateProfileImage(body, name, token, progressDialog, new RetrofitResponses() {
+                @Override
+                public void onSuccess(String message, ProgressDialog progressDialog) {
+                    onStart();
+                    uploadButton.setVisibility(View.GONE);
+                    progressDialog.dismiss();
+                    Toast.makeText(SellerMainActivity.this, ""+message, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String message, ProgressDialog progressDialog) {
+                    progressDialog.dismiss();
+                    Toast.makeText(SellerMainActivity.this, ""+message, Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

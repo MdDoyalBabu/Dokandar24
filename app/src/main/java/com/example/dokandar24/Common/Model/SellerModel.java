@@ -2,7 +2,7 @@ package com.example.dokandar24.Common.Model;
 
 public class SellerModel {
 
-    String name,joiningDate,address,country,city,phone,password,sellerId,refer,myRefer,accountStatus;
+    String name,profileImage,joiningDate,address,country,city,phone,password,sellerId,refer,myRefer,accountStatus;
     int cashBalance;
 
     public SellerModel(){
@@ -23,6 +23,7 @@ public class SellerModel {
 
     public SellerModel(String name, String joiningDate, String address, String country, String city, String phone, String password, String sellerId, String refer, String myRefer, String accountStatus, int cashBalance) {
         this.name = name;
+        this.profileImage=profileImage;
         this.joiningDate = joiningDate;
         this.address = address;
         this.country = country;
@@ -36,8 +37,13 @@ public class SellerModel {
         this.cashBalance = cashBalance;
     }
 
+
     public String getName() {
         return name;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
     }
 
     public String getJoiningDate() {

@@ -96,27 +96,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_margin="5dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/profileImageView"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/profile"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#000"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentRight="true" />
+
+                    android:layout_margin="5dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/profileImageView"
+                    android:src="@drawable/profile"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#000"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true" />
+
 
         </RelativeLayout>
-
-
-
-
-
     </androidx.cardview.widget.CardView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_bg_1"
+            android:text="Upload"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:minWidth="120dp"
+            android:id="@+id/uploadButtonid"
+            android:visibility="gone"
+            android:minHeight="30dp"
+            />
+
+    </RelativeLayout>
 
 
     <LinearLayout

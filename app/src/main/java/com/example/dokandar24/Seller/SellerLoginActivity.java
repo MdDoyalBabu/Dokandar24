@@ -14,8 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dokandar24.Common.ApiCall.UserApi;
+import com.example.dokandar24.Common.LocalDb.UserDb;
+import com.example.dokandar24.Common.Model.SellerListModel;
 import com.example.dokandar24.Common.Responses.CustomResponse;
 import com.example.dokandar24.Common.Responses.RetrofitResponses2;
+import com.example.dokandar24.Customer.CustomerMainActivity;
+import com.example.dokandar24.MainActivity;
 import com.example.dokandar24.R;
 
 import java.util.HashMap;
@@ -28,7 +32,7 @@ public class SellerLoginActivity extends AppCompatActivity {
     private Button loginButton;
     private ProgressBar progressBar;
     private UserApi userApi;
-
+    private UserDb userDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class SellerLoginActivity extends AppCompatActivity {
                 String phone=phoneEt.getText().toString().trim();
                 String password=passwordEt.getText().toString().trim();
                 if(phone.isEmpty()){
-                    showError(phoneEt,"Please enter Your Phone Number with country Code.");
+                    showError(phoneEt,"Please enter Your Phone Number");
                 }else if(password.isEmpty()){
                     showError(passwordEt,"Please Enter Password");
                 }else{
@@ -83,9 +87,23 @@ public class SellerLoginActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        userDb=new UserDb(this);
+        String token=userDb.getAccessToken();
+        String userType=userDb.getUserType();
 
+        if(!token.equals("") && userType.equals("seller")){
+            sendSellerToMainActivity();
+        }
+        if(!token.equals("") && userType.equals("customer")){
+            sendUserMainActivity();
+        }
+    }
 
     private void init() {
+        userDb=new UserDb(this);
         userApi=new UserApi(this);
         progressBar=findViewById(R.id.progressBar);
         registerLink_Tv=findViewById(R.id.registration_link);
@@ -100,6 +118,16 @@ public class SellerLoginActivity extends AppCompatActivity {
 
     private void sendUserToUserMainActivity() {
         startActivity(new Intent(SellerLoginActivity.this,SellerMainActivity.class));
+        finish();
+    }
+
+    public void sendSellerToMainActivity(){
+        Intent intent=new Intent(SellerLoginActivity.this, SellerMainActivity.class);
+        startActivity(intent);
+        finish();
+    } public void sendUserMainActivity(){
+        Intent intent=new Intent(SellerLoginActivity.this, CustomerMainActivity.class);
+        startActivity(intent);
         finish();
     }
 }
